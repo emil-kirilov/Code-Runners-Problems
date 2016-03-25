@@ -1,0 +1,37 @@
+#!/usr/bin/env ruby
+P ARGV
+require 'optparse'
+
+options = {}
+
+opt_parser = OptionParser.new do |opt|
+  #opt.banner = "Usage of calculate-tip"
+  #opt.separator ""
+  #opt.separator "commands:"
+  #opt.separator "" 
+  #opt.separator "  calculate-tip --amount 10 --tip 5"
+  #opt.separator ""
+  #opt.separator "  Please provide amount: [user input: 10]"
+  #opt.separator "  Please provide tip (%): [user input: 5]"
+
+  opt.on("--amount BILL", Float, "How much was the bill?") do |bill|
+    if bill > 0   
+      options[:amount] = bill 
+    else 
+      p "Amount cannot be negative or 0."
+    end
+  end
+
+  opt.on("--tip PERCENT", Float, "% of the tip(default 15%, must be positive)") do |percent| 
+    if percent > 0 	
+      options[:tip] = percent 
+    else
+      options[:tip] = 15
+    end
+  end
+  
+  p options
+  #calculate(options[:amount], options[:tip])
+end
+
+
