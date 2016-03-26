@@ -1,5 +1,8 @@
 #!/usr/bin/env ruby
 
+require 'rest-client'
+require 'json'
+
 puts "Please provide amount: "
 amount = gets.chomp
 puts "Please provide tip (%): "
@@ -8,14 +11,18 @@ tip = gets.chomp.to_i
 amount, currency = amount.split(' ')
 amount = amount.to_i
 
-def calculate(amount, tip_percentage, currency)
-  tip = amount * (tip_percentage / 100.0)
-  puts "Total amount with tip: #{amount + tip} #{currency}"
-  puts "Tip amount: #{tip} #{currency}" 
+response = RestClient.post 'http://office.code-runners.com:8888', {:amount => amount, :tip => tip}
+response_hash = JSON.parse(response)
+
+
+def show(amount_with_tip, tip, currency)
+  puts "Total amount with tip: #{amount_with_tip} #{currency}"
+  tip_rounded = tip.round(1)
+  puts "Tip amount: #{tip_rounded} #{currency}"
 end
 
 if amount > 0 and tip > 0
-  calculate(amount, tip, currency)
+  show(response_hash["amount_with_tip"], response_hash["tip"], currency)
 else 
   puts "Please enter valid values."
 end  
