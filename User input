@@ -1,0 +1,21 @@
+#!/usr/bin/env ruby
+
+puts "Please provide amount: "
+amount = gets.chomp
+puts "Please provide tip (%): "
+tip = gets.chomp.to_i
+
+amount, currency = amount.split(' ')
+amount = amount.to_i
+
+def calculate(amount, tip_percentage, currency)
+  tip = amount * (tip_percentage / 100.0)
+  puts "Total amount with tip: #{amount + tip} #{currency}"
+  puts "Tip amount: #{tip} #{currency}" 
+end
+
+if amount > 0 and tip > 0
+  calculate(amount, tip, currency)
+else 
+  puts "Please enter valid values."
+end  

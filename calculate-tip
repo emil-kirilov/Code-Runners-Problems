@@ -1,11 +1,13 @@
 #!/usr/bin/env ruby
 
 require 'optparse'
+require 'rest-client'
+require 'json'
 
 options = {}
 options[:amount] = 0
 options[:tip] = 15
-calculate_flag = true
+show_flag = true
 
 opt_parser = OptionParser.new do |opt|
   opt.banner = "Usage of calculate-tip"
@@ -16,18 +18,24 @@ opt_parser = OptionParser.new do |opt|
   opt.separator "	Tip amount: 0.5"
   opt.separator "Options:" 
   	
-  calculate_flag = false if ARGV.include?("--help")
+  show_flag = false if ARGV.include?("--help")
   
   opt.on("--amount BILL", Float, "Amount of the bill. It is mandatory and must be positive.") do |bill|
     if bill > 0 
       options[:amount] = bill 
     else 
-      p "Amount cannot be negative or 0."
+      puts "Amount cannot be negative or 0."
+      show_flag = false
     end
   end
 
   opt.on("--tip PERCENT", Float, "Tip(%), must be positive. The default value is 15%.") do |percent| 
-    options[:tip] = percent if percent > 0 	
+    if percent >= 0 	
+      options[:tip] = percent 
+    else
+      puts "Tip cannot be negative."
+      show_flag = false
+    end
   end
 
   opt.on("--help", "Help") do
@@ -37,18 +45,15 @@ opt_parser = OptionParser.new do |opt|
   opt.parse!
 end
 
-def calculate(amount, tip_percentage)
-  if amount == 0
-    puts "Please enter amount."
-  else
-    tip = amount * (tip_percentage / 100.0)
-    puts "Total amount with tip: #{amount + tip}"
-    puts "Tip amount: #{tip}" 
-  end
+response = RestClient.post 'http://office.code-runners.com:8888', {:amount => options[:amount], :tip => options[:tip]}
+response_hash = JSON.parse(response)
+
+
+def show(amount_with_tip, tip)
+  puts "Total amount with tip: #{amount_with_tip}"
+  puts "Tip amount: #{tip}"
 end
 
-calculate(options[:amount], options[:tip]) if calculate_flag
-
-
+show(response_hash["amount_with_tip"], response_hash["tip"]) if show_flag
 
 
