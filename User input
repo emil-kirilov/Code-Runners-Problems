@@ -21,7 +21,7 @@ def show(amount_with_tip, tip, currency)
   puts "Tip amount: #{tip_rounded} #{currency}"
 end
 
-if amount > 0 and tip > 0
+if amount > 0 and tip >= 0
   show(response_hash["amount_with_tip"], response_hash["tip"], currency)
 else 
   puts "Please enter valid values."
