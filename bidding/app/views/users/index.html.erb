@@ -1,0 +1,32 @@
+<h2>All users</h2>
+
+<table>
+	<tr>
+		<th>id</th>
+		<th>email</th>
+		<th>Options</th>
+	</tr>
+
+	<tbody>
+		<% if @users.empty? %>
+      <strong> No users yet</strong>
+    <% else %>
+    	<% @users.each do |user| %>
+    		<tr>
+    			<td><%= user.id %></td>
+    			<td><%= user.email %></td>
+    			<td><%= link_to 'Destroy', user, method: :delete %></td>
+    		</tr>
+    	<% end %>
+		<% end %>
+	</tbody>
+</table></br>
+ 
+<%= form_for(@user, remote: true) do |f| %>
+  <%= f.label :email %>
+  <%= f.text_field :email %>
+  <%= f.label :password %>
+  <%= f.password_field :password %>
+  
+  <%= f.submit %>
+<% end %>

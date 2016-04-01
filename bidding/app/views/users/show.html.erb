@@ -1,0 +1,8 @@
+<h2>Hi, <%= @user.email %>! </h2> 
+
+<% if flash[:notice] %>
+  <p><%= flash[:notice] %></p>
+<% end %>
+
+<%= link_to("Products", '/products') %></br>
+<%= link_to("Log out", '/login') %>

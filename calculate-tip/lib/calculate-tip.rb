@@ -52,7 +52,13 @@ opt_parser = OptionParser.new do |opt|
     puts "Please provide amount: "
     amount = gets.chomp
     puts "Please provide tip (%): "
-    tip = gets.chomp.to_i
+    tip = gets.chomp
+    
+    if tip == ""
+      tip = 15 
+    else
+      tip = tip.to_i
+    end
 
     amount, currency = amount.split(' ')
     amount = amount.to_i

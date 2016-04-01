@@ -1,0 +1,45 @@
+<h3> Products </h3>
+
+<% if flash[:error] %>
+  <p><%= flash[:error] %></p>
+<% end %>
+
+
+<% if flash[:notice] %>
+  <p><%= flash[:notice] %></p>
+<% end %>
+
+
+<table>
+  <tr>
+    <th>Name</th>
+    <th>Photo</th>
+    <th>Highest bidder</th>
+    <th colspan="2">Options</th>
+    <th colspan="2">Raise</th>
+  </tr>
+
+  <tbody>
+    <% if @products.empty? %>
+      <strong> No products yet</strong>
+    <% else %>
+      <% @products.each do |product| %>
+        <tr>
+          <td><%= product.name %></td>
+          <td><img src="<%= product.photo %>" style="width:200px"></td>
+          <td><%= product.price %>$  <%= product.highest_bidder %></td>
+          <td><%= link_to("Edit", edit_product_path(product.id)) %></td>
+          <td><%= link_to("Destroy", product, method: :delete) %></td>
+          <td>
+            <%= form_for product, url:{ action: :update , id: product.id, highest_bidder: current_user.email}, remote: true do |f| %>
+              <%= f.submit 'Place bid'%>
+              <%= f.text_field :price %>
+            <% end %>
+          </td>
+        </tr>
+      <% end %>
+    <% end %>
+  </tbody>
+</table>
+
+<%= link_to('Sign out', '/logout') %>
