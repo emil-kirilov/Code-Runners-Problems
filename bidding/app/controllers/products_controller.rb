@@ -63,6 +63,10 @@ class ProductsController < ApplicationController
     redirect_to products_path
   end
 
+  def highest_bidder
+    @products = Product.where(highest_bidder: current_user.email)
+  end
+
   private
 
   def product_params

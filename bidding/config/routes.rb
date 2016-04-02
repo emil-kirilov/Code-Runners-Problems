@@ -6,7 +6,7 @@ Rails.application.routes.draw do
   get '/login' => 'sessions#new'
   post '/sessions' => 'sessions#create'
   get '/logout' => 'sessions#destroy'
-  patch '/products/:id/bid' => 'products#update_highest_bidder2'
+  get '/products/highest_bidder' => 'products#highest_bidder'
   resources :users#, only: %i(new show create)
   resources :products#, only: %i(new show create index)
 end

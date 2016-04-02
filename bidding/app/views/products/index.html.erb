@@ -14,6 +14,7 @@
   <tr>
     <th>Name</th>
     <th>Photo</th>
+    <th>Price</th>
     <th>Highest bidder</th>
     <th colspan="2">Options</th>
     <th colspan="2">Raise</th>
@@ -27,7 +28,8 @@
         <tr>
           <td><%= product.name %></td>
           <td><img src="<%= product.photo %>" style="width:200px"></td>
-          <td><%= product.price %>$  <%= product.highest_bidder %></td>
+          <td><%= product.price %>$</td>
+          <td><%= product.highest_bidder %></td>
           <td><%= link_to("Edit", edit_product_path(product.id)) %></td>
           <td><%= link_to("Destroy", product, method: :delete) %></td>
           <td>
@@ -42,4 +44,5 @@
   </tbody>
 </table>
 
+<%= link_to('Your highest bids', '/products/highest_bidder') %></br>
 <%= link_to('Sign out', '/logout') %>

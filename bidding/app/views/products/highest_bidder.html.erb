@@ -1,0 +1,23 @@
+<table>
+  <tr>
+    <th>Name</th>
+    <th>Photo</th>
+    <th>Highest bidder</th>
+  </tr>
+
+  <tbody>
+    <% if @products.empty? %>
+      <strong> No products yet</strong>
+    <% else %>
+      <% @products.each do |product| %>
+        <tr>
+          <td><%= product.name %></td>
+          <td><img src="<%= product.photo %>" style="width:200px"></td>
+          <td><%= product.price %>$  <%= product.highest_bidder %></td>
+        </tr>
+      <% end %>
+    <% end %>
+  </tbody>
+</table>
+
+<%= link_to('Go back to products', '/products') %>
