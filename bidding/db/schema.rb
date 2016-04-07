@@ -11,7 +11,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160401100308) do
+ActiveRecord::Schema.define(version: 20160407211007) do
+
+  create_table "bids", force: :cascade do |t|
+    t.decimal  "amount",     precision: 8, scale: 2, null: false
+    t.integer  "user_id",                            null: false
+    t.integer  "product_id",                         null: false
+    t.datetime "created_at",                         null: false
+    t.datetime "updated_at",                         null: false
+    t.string   "unit",                               null: false
+  end
+
+  add_index "bids", ["product_id"], name: "index_bids_on_product_id"
+  add_index "bids", ["user_id"], name: "index_bids_on_user_id"
 
   create_table "products", force: :cascade do |t|
     t.string   "name",           null: false

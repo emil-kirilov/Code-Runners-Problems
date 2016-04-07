@@ -1,4 +1,4 @@
-class User < ApplicationRecord
+class User < ActiveRecord::Base
   has_secure_password
 
   validates :email, presence: true, uniqueness: { message: "This email is already used." } 

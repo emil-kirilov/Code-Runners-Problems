@@ -1,5 +1,4 @@
 class UsersController < ApplicationController
-  #remove index?
   def index
     @user = User.new
     @users = User.all
